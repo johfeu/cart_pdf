@@ -102,10 +102,6 @@ class PdfService
         $this->storageRepository = $storageRepository;
     }
 
-    /**
-     * @param OrderItem $orderItem
-     * @param string $pdfType
-     */
     public function createPdf(OrderItem $orderItem, string $pdfType): void
     {
         $this->setPluginSettings($pdfType);
@@ -198,7 +194,7 @@ class PdfService
 
         $colorArray = [0, 0, 0];
         if ($this->pdfSettings['drawColor']) {
-            $colorArray = explode(',', $this->pdfSettings['drawColor']);
+            $colorArray = explode(',', (string) $this->pdfSettings['drawColor']);
         }
         $this->pdf->setDrawColorArray($colorArray);
 
@@ -288,7 +284,7 @@ class PdfService
         $view = $this->pdf->getStandaloneView('/' . ucfirst($pdfType) . '/Order/', 'Header');
         $view->assign('orderItem', $orderItem);
         $header = $view->render();
-        $headerOut = trim(preg_replace('~[\n]+~', '', $header));
+        $headerOut = trim(preg_replace('~[\n]+~', '', (string) $header));
 
         return $headerOut;
     }
@@ -305,7 +301,7 @@ class PdfService
             $view->assign('product', $product);
             $product = $view->render();
 
-            $bodyOut .= trim(preg_replace('~[\n]+~', '', $product));
+            $bodyOut .= trim(preg_replace('~[\n]+~', '', (string) $product));
         }
 
         return $bodyOut;
@@ -317,17 +313,14 @@ class PdfService
         $view->assign('orderSettings', $this->pdfSettings['body']['order']);
         $view->assign('orderItem', $orderItem);
         $footer = $view->render();
-        $footerOut = trim(preg_replace('~[\n]+~', '', $footer));
+        $footerOut = trim(preg_replace('~[\n]+~', '', (string) $footer));
 
         return $footerOut;
     }
 
-    /**
-     * @param string $pdfType
-     */
     protected function setPluginSettings(string $pdfType)
     {
-        if (TYPO3_MODE === 'BE') {
+        if (\TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
             $pageId = (int)(GeneralUtility::_GET('id')) ? GeneralUtility::_GET('id') : 1;
 
             $frameworkConfiguration = $this->configurationManager->getConfiguration(

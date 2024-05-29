@@ -77,9 +77,9 @@ class DocumentRenderer
 
         foreach ($generateDocuments as $documentType => $documentData) {
             if ((bool)$documentData) {
-                $getterForNumber = 'get' . ucfirst($documentType) . 'Number';
-                $setterForNumber = 'set' . ucfirst($documentType) . 'Number';
-                $setterForDate = 'set' . ucfirst($documentType) . 'Date';
+                $getterForNumber = 'get' . ucfirst((string) $documentType) . 'Number';
+                $setterForNumber = 'set' . ucfirst((string) $documentType) . 'Number';
+                $setterForDate = 'set' . ucfirst((string) $documentType) . 'Date';
 
                 if (!$orderItem->$getterForNumber()) {
                     $orderItem->$setterForNumber($orderItem->getOrderNumber());
