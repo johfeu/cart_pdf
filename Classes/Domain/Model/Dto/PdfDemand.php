@@ -36,7 +36,7 @@ class PdfDemand extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->debug;
     }
 
-    public function setDebug(int $debug)
+    public function setDebug(int $debug): void
     {
         if ($debug) {
             $this->debug = $debug;
@@ -48,7 +48,7 @@ class PdfDemand extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->fontSize;
     }
 
-    public function setFontSize(int $fontSize)
+    public function setFontSize(int $fontSize): void
     {
         if ($fontSize) {
             $this->fontSize = $fontSize;
@@ -60,7 +60,7 @@ class PdfDemand extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->foldMarksEnabled;
     }
 
-    public function setFoldMarksEnabled(bool $foldMarksEnabled)
+    public function setFoldMarksEnabled(bool $foldMarksEnabled): void
     {
         $this->foldMarksEnabled = $foldMarksEnabled;
     }
@@ -70,7 +70,7 @@ class PdfDemand extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->addressFieldMarksEnabled;
     }
 
-    public function setAddressFieldMarksEnabled(bool $addressFieldMarksEnabled)
+    public function setAddressFieldMarksEnabled(bool $addressFieldMarksEnabled): void
     {
         $this->addressFieldMarksEnabled = $addressFieldMarksEnabled;
     }

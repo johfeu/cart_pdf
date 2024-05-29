@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace Extcode\CartPdf\Service;
 
@@ -39,17 +40,17 @@ class PdfService
     protected $storageRepository;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $pluginSettings = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $cartSettings = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $pdfSettings = [];
 
@@ -115,6 +116,9 @@ class PdfService
 
         if (file_exists($pdfFilename)) {
             $storage = $this->storageRepository->findByUid((int)$this->pdfSettings['storageRepository']);
+            if (!$storage) {
+                return;
+            }
             $targetFolder = $storage->getFolder($this->pdfSettings['storageFolder']);
 
             if (class_exists('\TYPO3\CMS\Core\Resource\DuplicationBehavior')) {
@@ -194,7 +198,7 @@ class PdfService
 
         $colorArray = [0, 0, 0];
         if ($this->pdfSettings['drawColor']) {
-            $colorArray = explode(',', (string) $this->pdfSettings['drawColor']);
+            $colorArray = explode(',', (string)$this->pdfSettings['drawColor']);
         }
         $this->pdf->setDrawColorArray($colorArray);
 
@@ -284,7 +288,7 @@ class PdfService
         $view = $this->pdf->getStandaloneView('/' . ucfirst($pdfType) . '/Order/', 'Header');
         $view->assign('orderItem', $orderItem);
         $header = $view->render();
-        $headerOut = trim(preg_replace('~[\n]+~', '', (string) $header));
+        $headerOut = trim((string)preg_replace('~[\n]+~', '', (string)$header));
 
         return $headerOut;
     }
@@ -301,7 +305,7 @@ class PdfService
             $view->assign('product', $product);
             $product = $view->render();
 
-            $bodyOut .= trim(preg_replace('~[\n]+~', '', (string) $product));
+            $bodyOut .= trim((string)preg_replace('~[\n]+~', '', (string)$product));
         }
 
         return $bodyOut;
@@ -313,12 +317,12 @@ class PdfService
         $view->assign('orderSettings', $this->pdfSettings['body']['order']);
         $view->assign('orderItem', $orderItem);
         $footer = $view->render();
-        $footerOut = trim(preg_replace('~[\n]+~', '', (string) $footer));
+        $footerOut = trim((string)preg_replace('~[\n]+~', '', (string)$footer));
 
         return $footerOut;
     }
 
-    protected function setPluginSettings(string $pdfType)
+    protected function setPluginSettings(string $pdfType): void
     {
         if (\TYPO3\CMS\Core\Http\ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()) {
             $pageId = (int)(GeneralUtility::_GET('id')) ? GeneralUtility::_GET('id') : 1;
