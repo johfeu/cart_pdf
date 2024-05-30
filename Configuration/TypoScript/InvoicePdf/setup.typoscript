@@ -15,7 +15,7 @@ plugin.tx_cartpdf {
         enableAddressFieldMarks = 1
 
         header {
-            margin = 30mm
+            margin = 30
             html {
                 logo {
                     width = 50
@@ -49,7 +49,7 @@ plugin.tx_cartpdf {
         }
 
         footer {
-            margin = 40mm
+            margin = 40
 
             html {
                 content {

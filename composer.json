@@ -41,18 +41,15 @@
         }
     },
     "require": {
-        "php": ">=7.2.0 <7.5",
-        "typo3/cms-core": "^10.4 || ^11.5",
-        "extcode/cart": "^7.0 || ^8.0",
-        "extcode/tcpdf": "^3.0"
+        "php": ">=7.2.0 <8.3",
+        "typo3/cms-core": "^11.4 || ^12.4",
+        "extcode/cart": "*",
+        "extcode/tcpdf": "*"
     },
     "require-dev": {
         "typo3/testing-framework": "^5.0",
         "friendsofphp/php-cs-fixer": "^2.14",
         "helmich/typo3-typoscript-lint": "^2.0"
-    },
-    "replace": {
-        "extcode/cart-pdf": "self.version"
     },
     "scripts": {
         "post-autoload-dump": [

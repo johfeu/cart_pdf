@@ -180,31 +180,31 @@ class PdfService
         $this->pdf->AddPage();
 
         $font = 'Helvetica';
-        if ($this->pdfSettings['font']) {
+        if (isset($this->pdfSettings['font'])) {
             $font = $this->pdfSettings['font'];
         }
 
         $fontStyle = '';
-        if ($this->pdfSettings['fontStyle']) {
+        if (isset($this->pdfSettings['fontStyle'])) {
             $fontStyle = $this->pdfSettings['fontStyle'];
         }
 
         $fontSize = 8;
-        if ($this->pdfSettings['fontSize']) {
+        if (isset($this->pdfSettings['fontSize'])) {
             $fontSize = $this->pdfSettings['fontSize'];
         }
 
         $this->pdf->SetFont($font, $fontStyle, $fontSize);
 
         $colorArray = [0, 0, 0];
-        if ($this->pdfSettings['drawColor']) {
+        if (isset($this->pdfSettings['drawColor'])) {
             $colorArray = explode(',', (string)$this->pdfSettings['drawColor']);
         }
         $this->pdf->setDrawColorArray($colorArray);
 
         $this->renderMarker();
 
-        if ($this->pdfSettings['letterhead']['html']) {
+        if (isset($this->pdfSettings['letterhead']['html'])) {
             foreach ($this->pdfSettings['letterhead']['html'] as $partName => $partConfig) {
                 $templatePath = '/' . ucfirst($pdfType) . 'Pdf/Letterhead/';
                 $assignToView = ['orderItem' => $orderItem];
@@ -212,7 +212,7 @@ class PdfService
             }
         }
 
-        if ($this->pdfSettings['body']['before']['html']) {
+        if (isset($this->pdfSettings['body']['before']['html'])) {
             foreach ($this->pdfSettings['body']['before']['html'] as $partName => $partConfig) {
                 $templatePath = '/' . ucfirst($pdfType) . 'Pdf/Body/Before/';
                 $assignToView = ['orderItem' => $orderItem];
@@ -222,7 +222,7 @@ class PdfService
 
         $this->renderCart($orderItem, $pdfType);
 
-        if ($this->pdfSettings['body']['after']['html']) {
+        if (($this->pdfSettings['body']['after']['html'])) {
             foreach ($this->pdfSettings['body']['after']['html'] as $partName => $partConfig) {
                 $templatePath = '/' . ucfirst($pdfType) . 'Pdf/Body/After/';
                 $assignToView = ['orderItem' => $orderItem];
