@@ -119,7 +119,12 @@ class PdfService
             if (!$storage) {
                 return;
             }
-            $targetFolder = $storage->getFolder($this->pdfSettings['storageFolder']);
+            $targetFolderPath = $this->pdfSettings['storageFolder'];
+            if ($storage->hasFolder($targetFolderPath)) {
+                $targetFolder = $storage->getFolder($targetFolderPath);
+            } else {
+                $targetFolder = $storage->createFolder($targetFolderPath);
+            }
 
             if (class_exists('\TYPO3\CMS\Core\Resource\DuplicationBehavior')) {
                 $conflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
